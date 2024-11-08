@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # Set API KEY for Alpha Vantage
 #Static folder will get the SVG which is then uploaded to the html page
-API_KEY = "K5MNQEQQ1D7IYJ0M"
+API_KEY = "GCBNV7ZGRCPKN9BE"
 STATICFOLD = os.path.join(os.getcwd(), 'static')
 
 #read csv file to load stock symbols
@@ -20,7 +20,7 @@ def load_symbols():
     with open('stocks.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            symbols.append(row['symbol'])
+            symbols.append(row['Symbol'])
         return symbols
 
 # Retrieve stock data from Alpha Vantage function
