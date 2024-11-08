@@ -84,12 +84,13 @@ def generate_chart(data, chart_type, stock_symbol):
     chart.render_to_file(chart_file)
     return chart_file
 
+# unknown does this need to change?
 # Flask route connection to chart
 @app.route('/')
 def display_chart():
     global stock_symbol, time_function, beginning_date, ending_date, chart_type
     
-    
+    # now change to route to web 
     # Retrieve stock data and generate the chart
     print("Retrieving stock data for chart generation...")
     stock_data = retrieve_stock_data(stock_symbol, time_function, beginning_date, ending_date)
@@ -101,53 +102,6 @@ def display_chart():
     else:
         return "No data available for the given stock symbol and date range."
 
-if __name__ == "__main__":
-    print("Stock Data Visualizer")
-    print("-----------------------")
 
-    # Collect input from the user before running Flask
-    stock_symbol = input("Enter the stock symbol you are looking for: ").upper()
-
-
-    # Ask for chart type
-    print("\nChart Types\n-------------\n1. Bar\n2. Line")
-    chart_type = input("Enter the chart type you want (1 for Bar, 2 for Line): ")
-
-    while chart_type not in ["1", "2"]:
-        print("Invalid chart type, please try again.")
-        chart_type = input("Enter the chart type you want (1 for Bar, 2 for Line): ")
-
-    # Ask for time series
-    print("\nSelect the Time Series of the chart you want to Generate")
-    print("----------------------------------------------------------")
-    print("1. Daily\n2. Weekly\n3. Monthly")
-    time_series_option = input("Enter time series option (1, 2, 3): ")
-
-    time_series_map = {
-        "1": "TIME_SERIES_DAILY",
-        "2": "TIME_SERIES_WEEKLY",
-        "3": "TIME_SERIES_MONTHLY"
-    }
-
-
-
-    while time_series_option not in time_series_map:
-        print("Invalid time series option, please try again.")
-        time_series_option = input("Enter time series option (1, 2, 3): ")
-
-    time_function = time_series_map[time_series_option]
-
-    # Ask for start date and end date
-    beginning_date = input("Enter the start date (YYYY-MM-DD): ")
-    while not datetime.strptime(beginning_date, "%Y-%m-%d"):
-        print("Invalid date format, please try again.")
-        beginning_date = input("Enter the start date (YYYY-MM-DD): ")
-
-    ending_date = input("Enter the end date (YYYY-MM-DD): ")
-    while not datetime.strptime(ending_date, "%Y-%m-%d") or datetime.strptime(ending_date, "%Y-%m-%d") < datetime.strptime(beginning_date, "%Y-%m-%d"):
-        print("Invalid end date or end date is before start date, please try again.")
-        ending_date = input("Enter the end date (YYYY-MM-DD): ")
-
-    # SHowing flask is running
-    print("Starting the Flask server...")
-    app.run(debug=False)
+# remove due to not needed this 
+# add routing and index.html implementation 
