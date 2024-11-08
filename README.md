@@ -1,5 +1,5 @@
 # Stock_Data_Visualizer
-Scrum Team 13 Project 3
+Updated for project 3a based from Scrum Team 13 Project 3
 
 ## Requirements need to be added to local machine for code to work correctly 
 -Commands needed
