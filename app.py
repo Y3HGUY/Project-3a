@@ -1,7 +1,6 @@
 import os
 import pygal
 import requests
-import webbrowser
 import csv
 from datetime import datetime
 from flask import Flask, render_template, url_for
@@ -105,11 +104,11 @@ def index():
 #route to generate and display chart
 @app.route('/generate_chart', methods=['POST'])
 def generate_chart_route():
-    stock_symbol = request.form['stock_symbol']
-    chart_type = request.form['chart_type']
-    time_series = request.form['time_series']
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
+    stock_symbol = requests.form['stock_symbol']
+    chart_type =  requests.form['chart_type']
+    time_series =  requests.form['time_series']
+    start_date =  requests.form['start_date']
+    end_date =  requests.form['end_date']
     
     # now change to route to web 
     # Retrieve stock data and generate the chart
