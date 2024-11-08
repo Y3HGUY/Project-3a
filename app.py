@@ -57,10 +57,10 @@ def retrieve_stock_data(stock_symbol, time_function, start_date, end_date):
 
         time_series_data = stock_data.get(time_type, {})
         date_range_data = {date: values for date, values in time_series_data.items()
-                           if beginning_date <= date <= ending_date}
+                           if start_date <= date <= end_date}
 
         if not date_range_data:
-            print(f"No data found between {beginning_date} and {ending_date}.")
+            print(f"No data found between {start_date} and {end_date}.")
             return None
 
 
