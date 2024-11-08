@@ -2,6 +2,7 @@ import os
 import pygal
 import requests
 import webbrowser
+import csv
 from datetime import datetime
 from flask import Flask, render_template, url_for
 
@@ -13,12 +14,21 @@ app = Flask(__name__)
 API_KEY = "K5MNQEQQ1D7IYJ0M"
 STATICFOLD = os.path.join(os.getcwd(), 'static')
 
+#read csv file to load stock symbols
+def load_symbols():
+    symbols = []
+    with open('stocks.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            symbols.append(row['symbol'])
+        return symbols
+
 # Retrieve stock data from Alpha Vantage function
-def retrieve_stock_data(stock_symbol, time_function, beginning_date, ending_date):
+def retrieve_stock_data(stock_symbol, time_function, start_date, end_date):
     try:
-        print(f"Retrieving data for {stock_symbol} from {beginning_date} to {ending_date}")
-        start_date_input = datetime.strptime(beginning_date, "%Y-%m-%d")
-        end_date_input = datetime.strptime(ending_date, "%Y-%m-%d")
+        print(f"Retrieving data for {stock_symbol} from {start_date} to {end_date}")
+        start_date_input = datetime.strptime(start_date, "%Y-%m-%d")
+        end_date_input = datetime.strptime(end_date, "%Y-%m-%d")
 
 
         if end_date_input < start_date_input:
@@ -79,21 +89,32 @@ def generate_chart(data, chart_type, stock_symbol):
     if not os.path.exists(STATICFOLD):
         os.makedirs(STATICFOLD)
         print(f"Created static folder: {STATICFOLD}")
+        
 
     print(f"Saving chart to {chart_file}")
     chart.render_to_file(chart_file)
     return chart_file
 
-# unknown does this need to change?
-# Flask route connection to chart
+# add index 
 @app.route('/')
-def display_chart():
-    global stock_symbol, time_function, beginning_date, ending_date, chart_type
+def index():
+    symbols = load_symbols()
+    return render_template('index.html',symbols=symbols)
+
+# Flask route connection to chart
+#route to generate and display chart
+@app.route('/generate_chart', methods=['POST'])
+def generate_chart_route():
+    stock_symbol = request.form['stock_symbol']
+    chart_type = request.form['chart_type']
+    time_series = request.form['time_series']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
     
     # now change to route to web 
     # Retrieve stock data and generate the chart
     print("Retrieving stock data for chart generation...")
-    stock_data = retrieve_stock_data(stock_symbol, time_function, beginning_date, ending_date)
+    stock_data = retrieve_stock_data(stock_symbol, time_series, start_date, end_date)
     if stock_data:
         chart_path = generate_chart(stock_data, chart_type, stock_symbol)
         chart_url = url_for('static', filename=os.path.basename(chart_path))
@@ -103,5 +124,6 @@ def display_chart():
         return "No data available for the given stock symbol and date range."
 
 
-# remove due to not needed this 
-# add routing and index.html implementation 
+if __name__ == "__main__":
+    print("starting the Stock Data visualizer")
+    app.run(debug=True)
