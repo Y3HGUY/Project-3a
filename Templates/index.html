@@ -15,10 +15,10 @@
             text-align: center;
         }
         form {
-            max-width: 500px;
+            max-width: 650px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: black;
+            padding: 30px;
+            background-color: gray;
             color: white;
             border-radius: 8px;
         }
@@ -42,7 +42,7 @@
     
     <!--Hoping this reads form csv-->
     <h1>Stock Data Visualizer</h1>
-    <form action="/generate_chart" methods="POST">
+    <form action="/generate_chart" method="POST">
         <label for="stock_symbol">stock_symbol</label>
         <input lists="symbol_list" id="stock_symbol" name="stock_symbol" required>
         <datalist id="symbol_list">
