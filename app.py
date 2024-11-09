@@ -125,4 +125,4 @@ def generate_chart_route():
 
 if __name__ == "__main__":
     print("starting the Stock Data visualizer")
-    app.run(debug=True)
+    app.run(host="0.0.0.0")

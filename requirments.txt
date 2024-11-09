@@ -1,1 +1,4 @@
 Flask
+Pygal
+requests
+lxml

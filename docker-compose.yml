@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stock_data_app_flask
+    container_name: flask_SDV
+    ports:
+      - "5005:5000"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_DEBUG: "1"
